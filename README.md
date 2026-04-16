@@ -72,11 +72,11 @@ cyberpunk-snake/
 
 ## Configuration
 
-The game uses the following constants (configurable in App.jsx):
+The game uses the following constants:
 
-- **GRID_SIZE**: 30x30 cells
-- **TICK_RATE**: 120ms per game tick
-- **SNAKE_TYPES**: 4 visual variants with unique color schemes
+- **GRID_SIZE**: 30x30 cells (defined in `src/gameHelpers.js`)
+- **TICK_RATE**: 120ms per game tick (defined in `src/App.jsx`)
+- **SNAKE_TYPES**: 4 visual variants with unique color schemes (defined in `src/gameHelpers.js`)
 
 ## Technical Details
 
@@ -90,8 +90,8 @@ The game uses the following constants (configurable in App.jsx):
 ### Customizing Snake Types
 
 ```javascript
-// In App.jsx, modify the SNAKE_TYPES object
-const SNAKE_TYPES = {
+// In src/gameHelpers.js, modify the SNAKE_TYPES object
+export const SNAKE_TYPES = {
   custom: { name: 'Custom', color: '#ff0000', secondary: '#ffff00' },
   // Add more types as needed
 };
@@ -108,22 +108,23 @@ const TICK_RATE = 200; // Slower (200ms per tick)
 ### Changing Grid Size
 
 ```javascript
-// In App.jsx, modify GRID_SIZE
-const GRID_SIZE = 20; // Smaller grid
-const GRID_SIZE = 40; // Larger grid
+// In src/gameHelpers.js, modify GRID_SIZE
+export const GRID_SIZE = 20; // Smaller grid
+export const GRID_SIZE = 40; // Larger grid
 ```
 
-### Programmatic Game Control
+### Running Tests
 
-```jsx
-// Import the component and control via props
-import Game from './App';
+```bash
+# Run the test suite
+npm test
 
-// The game accepts these gameStatus values:
-// 'idle' - Initial state, waiting to start
-// 'playing' - Game is running
-// 'paused' - Game is paused
-// 'gameover' - Game has ended
+# Test output shows pass/fail for 28 test cases covering:
+# - Spawn validation
+# - Direction reversal prevention
+# - Combat resolution
+# - Score calculation
+# - Enemy movement safety
 ```
 
 ## License
