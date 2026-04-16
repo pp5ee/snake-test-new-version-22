@@ -8,5 +8,4 @@ dist/
 package-lock.json
 
 # Humanize loop state (do not commit)
-.humanize/.claude-wrapper-*.sh
-.humanize/skill/
+.humanize/
