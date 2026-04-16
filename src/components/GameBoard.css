@@ -1,0 +1,109 @@
+.game-board-wrapper {
+  position: relative;
+  background: linear-gradient(180deg, #0a0a12 0%, #12121f 100%);
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow:
+    0 0 20px #00ffff40,
+    0 0 40px #00ffff20,
+    inset 0 0 60px #00000080;
+}
+
+.game-board {
+  display: grid;
+  gap: 1px;
+  background: #1a1a2e40;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cell {
+  width: 18px;
+  height: 18px;
+  background: #0d0d15;
+  border-radius: 2px;
+  transition: all 0.05s ease;
+}
+
+.cell:hover {
+  background: #1a1a2e;
+}
+
+.player-head {
+  border-radius: 4px;
+  animation: glow-pulse 1s ease-in-out infinite;
+  z-index: 10;
+}
+
+.player-body {
+  border-radius: 3px;
+  opacity: 0.85;
+}
+
+.enemy-head {
+  border-radius: 4px;
+  z-index: 5;
+}
+
+.enemy-body {
+  border-radius: 3px;
+  opacity: 0.75;
+}
+
+.game-over-overlay,
+.pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  animation: fade-in 0.3s ease;
+}
+
+.game-over-text {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ff0080;
+  text-shadow:
+    0 0 10px #ff0080,
+    0 0 20px #ff0080,
+    0 0 40px #ff0080;
+  animation: flicker 0.5s ease-in-out infinite;
+  letter-spacing: 8px;
+}
+
+.pause-text {
+  font-size: 48px;
+  font-weight: bold;
+  color: #00ffff;
+  text-shadow:
+    0 0 10px #00ffff,
+    0 0 20px #00ffff;
+  letter-spacing: 8px;
+  animation: glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor;
+  }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
