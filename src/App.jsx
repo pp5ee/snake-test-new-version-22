@@ -207,7 +207,7 @@ function App() {
         );
 
         // Determine whether a candidate next-head position is safe for a given enemy.
-        const isSafe = (pos, enemy) => {
+        const isSafe = (pos, enemy, reserved = new Set()) => {
           // Out of bounds
           if (pos.x < 0 || pos.x >= GRID_SIZE || pos.y < 0 || pos.y >= GRID_SIZE)
             return false;
@@ -218,18 +218,23 @@ function App() {
           const ownBodyExcludingTail = enemy.body.slice(0, -1);
           if (ownBodyExcludingTail.some((s) => s.x === pos.x && s.y === pos.y))
             return false;
-          // Collides with other enemies
+          // Collides with other enemies (previous positions)
           const otherEnemyCells = new Set(
             prevEnemies
               .filter((e) => e.id !== enemy.id)
               .flatMap((e) => e.body.map((s) => `${s.x},${s.y}`))
           );
           if (otherEnemyCells.has(key)) return false;
+          // Collides with cells reserved by already-moved enemies this tick
+          if (reserved.has(key)) return false;
           return true;
         };
 
-        const newEnemies = prevEnemies
-          .map((enemy) => {
+        // Process enemies sequentially to reserve cells and prevent simultaneous collision
+        const newEnemies = [];
+        const reservedCells = new Set();
+
+        for (const enemy of prevEnemies) {
             const enemyHead = enemy.body[0];
             const allDirKeys = Object.keys(DIRECTIONS);
 
@@ -238,7 +243,8 @@ function App() {
               const delta = DIRECTIONS[d];
               return isSafe(
                 { x: enemyHead.x + delta.x, y: enemyHead.y + delta.y },
-                enemy
+                enemy,
+                reservedCells
               );
             });
 
@@ -269,17 +275,22 @@ function App() {
             };
 
             const movedBody = [newEnemyHead, ...enemy.body.slice(0, -1)];
-            // Return a new object (no mutation) with updated body and direction.
-            return { ...enemy, direction: chosenDir, body: movedBody };
-          })
-          .filter((enemy) => {
+
+            // Reserve the new head cell to prevent later enemies from moving there
+            reservedCells.add(`${newEnemyHead.x},${newEnemyHead.y}`);
+
+            // Add to new enemies array
+            newEnemies.push({ ...enemy, direction: chosenDir, body: movedBody });
+        }
+
+        // Now check combat with the NEW enemy positions (after all enemies have moved)
+        return newEnemies.filter((enemy) => {
             const playerSize = newBody.length;
             const enemySize = enemy.body.length;
 
-            if (
-              newHead.x === enemy.body[0].x &&
-              newHead.y === enemy.body[0].y
-            ) {
+            // Check collision with ANY enemy body segment, not just the head
+            const hitEnemy = enemy.body.some(seg => seg.x === newHead.x && seg.y === newHead.y);
+            if (hitEnemy) {
               if (enemySize >= playerSize) {
                 handleGameOver();
                 return true;
@@ -291,7 +302,7 @@ function App() {
               }
             }
             return true;
-          });
+        });
 
         return newEnemies;
       });
