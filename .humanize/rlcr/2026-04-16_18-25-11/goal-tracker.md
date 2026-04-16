@@ -175,3 +175,4 @@ Following TDD philosophy, each criterion includes positive and negative tests fo
 <!-- Issues discovered during implementation -->
 | Issue | Discovered Round | Blocking AC | Resolution Path |
 |-------|-----------------|-------------|-----------------|
+| Missing deterministic tests or validation harness for TDD-style acceptance criteria | 1 | AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7, AC-8, AC-9 | Extract pure game logic into testable helpers, add automated tests for spawn validity/combat/direction rules, and record passing evidence |
