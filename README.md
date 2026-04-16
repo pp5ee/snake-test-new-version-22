@@ -44,8 +44,8 @@ npm run build
 1. Select your snake type from the left panel
 2. Click "START GAME" to begin
 3. Use arrow keys to control your snake
-4. Eat smaller snakes (green outline) to grow and score points
-5. Avoid larger snakes (red outline) or you will die
+4. Eat smaller snakes to grow and score points
+5. Avoid larger snakes or you will die
 6. Check the leaderboard to see your top scores
 
 ## Project Structure
