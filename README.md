@@ -81,9 +81,50 @@ The game uses the following constants (configurable in App.jsx):
 ## Technical Details
 
 - **Framework**: React 18 with Vite
-- **State Management**: React useState/useReducer
+- **State Management**: React useState
 - **Persistence**: Browser localStorage
 - **Styling**: CSS with CSS custom properties for theming
+
+## Usage Examples
+
+### Customizing Snake Types
+
+```javascript
+// In App.jsx, modify the SNAKE_TYPES object
+const SNAKE_TYPES = {
+  custom: { name: 'Custom', color: '#ff0000', secondary: '#ffff00' },
+  // Add more types as needed
+};
+```
+
+### Adjusting Game Speed
+
+```javascript
+// In App.jsx, change the TICK_RATE constant
+const TICK_RATE = 100; // Faster (100ms per tick)
+const TICK_RATE = 200; // Slower (200ms per tick)
+```
+
+### Changing Grid Size
+
+```javascript
+// In App.jsx, modify GRID_SIZE
+const GRID_SIZE = 20; // Smaller grid
+const GRID_SIZE = 40; // Larger grid
+```
+
+### Programmatic Game Control
+
+```jsx
+// Import the component and control via props
+import Game from './App';
+
+// The game accepts these gameStatus values:
+// 'idle' - Initial state, waiting to start
+// 'playing' - Game is running
+// 'paused' - Game is paused
+// 'gameover' - Game has ended
+```
 
 ## License
 

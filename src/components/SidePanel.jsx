@@ -26,8 +26,15 @@ function SidePanel({
           {Object.entries(snakeTypes).map(([key, type]) => (
             <button
               key={key}
-              className={`snake-type-btn ${selectedType === key ? 'active' : ''}`}
-              onClick={() => setSelectedType(key)}
+              className={`snake-type-btn ${selectedType === key ? 'active' : ''} ${
+                gameStatus === 'playing' || gameStatus === 'paused' ? 'disabled' : ''
+              }`}
+              onClick={() => {
+                if (gameStatus !== 'playing' && gameStatus !== 'paused') {
+                  setSelectedType(key);
+                }
+              }}
+              disabled={gameStatus === 'playing' || gameStatus === 'paused'}
               style={{
                 '--primary': type.color,
                 '--secondary': type.secondary,

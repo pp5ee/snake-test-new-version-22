@@ -325,6 +325,13 @@ function App() {
     };
   }, [gameStatus, gameTick]);
 
+  // Sync selected snake type with player snake when idle
+  useEffect(() => {
+    if (gameStatus === 'idle' && playerSnake) {
+      setPlayerSnake((prev) => (prev ? { ...prev, type: selectedType } : prev));
+    }
+  }, [selectedType, gameStatus]);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (gameStatus !== 'playing' && gameStatus !== 'paused') return;
@@ -361,6 +368,19 @@ function App() {
 
   return (
     <div className="app">
+      <div className="grid-bg" />
+      <div className="particles">
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+      </div>
       <div className="game-container">
         <div className="game-wrapper">
           <SidePanel
