@@ -45,11 +45,11 @@ function App() {
     }
   };
 
-  const saveScore = (finalScore) => {
+  const saveScore = (finalScore, snakeTypeUsed) => {
     const newEntry = {
       score: finalScore,
       date: new Date().toISOString(),
-      snakeType: selectedType,
+      snakeType: snakeTypeUsed,
     };
     const updated = {
       top10: [...leaderboard.top10, newEntry]
@@ -161,11 +161,12 @@ function App() {
   };
 
   const handleGameOver = useCallback(() => {
+    const snakeTypeUsed = playerSnake?.type || selectedType;
     setGameStatus('gameover');
     if (score > 0) {
-      saveScore(score);
+      saveScore(score, snakeTypeUsed);
     }
-  }, [score]);
+  }, [score, playerSnake, selectedType]);
 
   const gameTick = useCallback(() => {
     if (gameStatus !== 'playing') return;
@@ -207,13 +208,12 @@ function App() {
         );
 
         // Determine whether a candidate next-head position is safe for a given enemy.
+        // Enemies CAN move into player cells - combat is resolved after movement based on size.
         const isSafe = (pos, enemy, reserved = new Set()) => {
           // Out of bounds
           if (pos.x < 0 || pos.x >= GRID_SIZE || pos.y < 0 || pos.y >= GRID_SIZE)
             return false;
           const key = `${pos.x},${pos.y}`;
-          // Collides with player
-          if (playerCellSet.has(key)) return false;
           // Collides with own body (excluding the tail which will move away)
           const ownBodyExcludingTail = enemy.body.slice(0, -1);
           if (ownBodyExcludingTail.some((s) => s.x === pos.x && s.y === pos.y))
