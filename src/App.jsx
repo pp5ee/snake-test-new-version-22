@@ -138,7 +138,7 @@ function App() {
     setScore(0);
     setGameStatus('idle');
     lastDirectionRef.current = 'UP';
-  }, []);
+  }, [selectedType]);
 
   const startGame = () => {
     if (gameStatus === 'idle' || gameStatus === 'gameover') {
