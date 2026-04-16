@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+
+# Package lock
+package-lock.json
+
+# Humanize loop state (do not commit)
+.humanize/.claude-wrapper-*.sh
+.humanize/skill/
